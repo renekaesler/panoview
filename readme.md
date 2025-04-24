@@ -2,6 +2,7 @@
 
 Panoview is a lightweight panorama viewer built entirely with WebGL — small footprint, no bloat. Embed panoramic scenes into your website without relying on bulky 3D libraries.
 
+
 <p align="center">
   <img alt="Panorama Demo" style="object-fit:cover" src="./.readme/panoview.gif">
 </p>
@@ -17,7 +18,7 @@ Panoview is a lightweight panorama viewer built entirely with WebGL — small fo
 ## via CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/panoview@0.0.0/dist/panoview.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/panoview/dist/panoview.min.js" crossorigin="anonymous"></script>
 ```
 
 

@@ -7,7 +7,7 @@ Panoview is a lightweight panorama viewer built entirely with WebGL — small fo
 </p>
 
 <p align="center">
-  <a href="https://github.com/renekaesler/panoview">View Demo</a>
+  <a href="https://renekaesler.github.io/panoview/">View Demo</a>
 </p>
 
 

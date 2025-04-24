@@ -1,2 +1,4 @@
-/demo
+/examples
 vite.config.js
+vite.library.js
+.github/

@@ -1,0 +1,43 @@
+{
+  "name": "panoview",
+  "version": "0.0.0",
+  "description": "A lightweight panorama viewer built entirely with WebGL",
+  "keywords": [
+    "panorama",
+    "viewer",
+    "equirectangular",
+    "360",
+    "3d",
+    "WebGL"
+  ],
+  "author": "René Kaesler <renekaesler@gmail.com> (https://renekaesler.com)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renekaesler/panoview.git"
+  },
+  "jsdelivr": "./dist/panoview.min.js",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/panoview.js",
+    "./registered": "./src/panoview-registered.js"
+  },
+  "scripts": {
+    "prepare": "npm run build:lib",
+    "dev": "vite --host",
+    "build:lib": "vite build --config vite.library.js",
+    "build:examples": "vite build",
+    "roll": "rollup src/panoview.js --file bundle.js --format iife",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.4.3"
+  },
+  "imports": {
+    "#core/*": "./src/core/*",
+    "#lib/*": "./src/lib/*"
+  }
+}

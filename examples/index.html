@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panoview</title>
+
+    <style>
+      html, body, canvas {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      canvas {
+        touch-action: none;
+      }
+
+      .credit {
+        position: absolute;
+        text-align: center;
+        color: white;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+      }
+
+      a:link, a:visited {
+        color: #bdc3c7;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+
+    <div class="credit">
+      PanoImg example. Equirectangular Image from 
+      <a href="https://www.flickr.com/" target="_blank">flickr</a>
+    </div>
+
+    <script type="module">
+      import { Viewer } from "../src/panoview.js";
+
+      const canvas = document.querySelector('canvas');
+      const viewer = new Viewer(canvas);
+
+      function loadImage() {
+        const image = new Image()
+        image.src = 'equirectangular.jpg';
+        image.onload = () => {
+          viewer.show(image);
+        }
+      }
+
+      loadImage();
+      canvas.addEventListener("webglcontextrestored", loadImage, false);
+    </script>
+  </body>
+</html>

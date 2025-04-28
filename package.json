@@ -26,7 +26,7 @@
     "prepare": "npm run build:lib",
     "dev": "vite --host",
     "build:lib": "rollup --config rollup.config.js",
-    "build:examples": "vite build",
+    "build:site": "node scripts/bundle-site.js",
     "preview": "vite preview"
   },
   "devDependencies": {

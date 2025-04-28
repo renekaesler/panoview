@@ -4,7 +4,7 @@ Panoview is a lightweight panorama viewer built entirely with WebGL — small fo
 
 
 <p align="center">
-  <img alt="Panorama Demo" style="object-fit:cover" src="./.readme/panoview.gif">
+  <img alt="Panorama Demo" style="object-fit:cover" src="./assets/panoview.gif">
 </p>
 
 <p align="center">

@@ -1,4 +1,4 @@
-import Viewer from "#core/viewer.js";
+import Viewer from "../core/viewer.js";
 
 const sheet = new CSSStyleSheet();
 sheet.replaceSync(`
@@ -17,7 +17,11 @@ sheet.replaceSync(`
 const template = document.createElement("template");
 template.innerHTML = `<canvas></canvas> `;
 
-export default class PanoImg extends HTMLElement {
+export default class PanoVideo extends HTMLElement {
+  static define(name = 'pano-video') {
+    customElements.define(name, PanoVideo);
+  }
+
   static observedAttributes = ["src"];
 
   get src() {
@@ -28,6 +32,19 @@ export default class PanoImg extends HTMLElement {
     this.setAttribute("src", value);
   }
 
+  constructor() {
+    super();
+
+    this.video = document.createElement("video");
+    this.video.muted = true;
+    this.video.loop = true;
+    this.video.playsInline = true;
+
+    this.video.oncanplay = () => {
+      this.video.play();
+    };
+  }
+
   connectedCallback() {
     const shadow = this.attachShadow({ mode: "open" });
     shadow.adoptedStyleSheets = [sheet];
@@ -36,30 +53,26 @@ export default class PanoImg extends HTMLElement {
     shadow.append(tmpl);
 
     const canvas = shadow.querySelector("canvas");
-    canvas.addEventListener("webglcontextrestored", this.#loadSrc, false);
     this.viewer = new Viewer(canvas);
+
+    this.viewer.beforeRender = () => {
+      const { paused, readyState, HAVE_ENOUGH_DATA } = this.video;
+
+      if (!paused && readyState === HAVE_ENOUGH_DATA) {
+        this.viewer.show(this.video);
+      }
+    };
   }
 
   disconnectedCallback() {
-    const canvas = this.shadowRoot.querySelector("canvas");
-    canvas.removeEventListener("webglcontextrestored", this.#loadSrc);
-
     this.viewer.dispose();
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "src":
-        this.#loadSrc();
+        this.video.src = newValue;
         break;
     }
   }
-
-  #loadSrc = () => {
-    const image = new Image();
-    image.src = this.src;
-    image.onload = () => {
-      this.viewer.show(image);
-    };
-  };
 }

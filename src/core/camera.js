@@ -1,6 +1,6 @@
 import { mat4 } from "gl-matrix";
 
-import { clamp, degToRad } from "#lib/math.js";
+import { clamp, degToRad } from "../lib/math.js";
 
 const { cos, sin, tan, atan } = Math;
 

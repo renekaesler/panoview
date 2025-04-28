@@ -1,6 +1,7 @@
 {
   "name": "panoview",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "type": "module",
   "description": "A lightweight panorama viewer built entirely with WebGL",
   "keywords": [
     "panorama",
@@ -15,9 +16,8 @@
     "type": "git",
     "url": "git+https://github.com/renekaesler/panoview.git"
   },
-  "jsdelivr": "./dist/panoview.min.js",
   "license": "MIT",
-  "type": "module",
+  "jsdelivr": "./dist/panoview.js",
   "exports": {
     ".": "./src/panoview.js",
     "./registered": "./src/panoview-registered.js"
@@ -25,19 +25,17 @@
   "scripts": {
     "prepare": "npm run build:lib",
     "dev": "vite --host",
-    "build:lib": "vite build --config vite.library.js",
+    "build:lib": "rollup --config rollup.config.js",
     "build:examples": "vite build",
-    "roll": "rollup src/panoview.js --file bundle.js --format iife",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup-plugin-copy": "^3.5.0",
     "vite": "^6.2.0"
   },
   "dependencies": {
     "gl-matrix": "^3.4.3"
-  },
-  "imports": {
-    "#core/*": "./src/core/*",
-    "#lib/*": "./src/lib/*"
   }
 }

@@ -29,16 +29,27 @@
       }
     </style>
   </head>
+
   <body>
-    <pano-video src="equirectangular.mp4"></pano-video>
+    <pano-video src="../assets/equirectangular.mp4"></pano-video>
 
     <div class="credit">
       PanoVideo example. Equirectangular Video from
       <a href="http://supercell.com/en/games/clashofclans/" target="_blank">Clash of clans</a>
     </div>
 
+    <script type="importmap">
+      {
+        "imports": {
+          "panoview": "https://cdn.jsdelivr.net/npm/panoview/+esm"
+        }
+      }
+    </script>
+
     <script type="module">
-      import '../src/panoview-registered.js'
+      import { PanoVideo } from 'panoview';
+
+      PanoVideo.define();
     </script>
   </body>
 </html>

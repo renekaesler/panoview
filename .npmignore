@@ -1,4 +1,6 @@
+/.github
+/assets
 /examples
+index.html
+rollup.config.js
 vite.config.js
-vite.library.js
-.github/

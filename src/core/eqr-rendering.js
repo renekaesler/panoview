@@ -4,7 +4,7 @@ import {
   getLocations,
   vert,
   frag,
-} from "#lib/gl.js";
+} from "../lib/gl.js";
 
 const numVertices = 36;
 const vertexSize = 3;

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    :root {
+      --panel-width: 300px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      overflow: hidden;
+      grid-template-columns: var(--panel-width) 1fr;
+      grid-template-rows: 64px 1fr;
+      grid-template-areas: 
+        "header header"
+        "content content";
+    }
+
+    header {
+      display: flex;
+      padding: .75rem;
+      grid-area: header;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      grid-area: content;
+    }
+
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      transition: .2s background-color;
+      pointer-events: none;
+
+      background-color: rgba(0, 0, 0, 0.0);
+
+      .panel-open &  {
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+      }
+    }
+
+    .panel {
+      position: absolute;
+      right: calc(-1 * var(--panel-width));
+  
+      width: calc(100vw - 20%);
+      max-width: var(--panel-width);
+      height: 100%;
+      padding: 1rem;
+      overflow-y: scroll;
+      grid-area: panel;
+      grid-template-rows: auto minmax(0, 1fr);
+
+      transition: .25s transform;
+      background-color: white;
+      scroll-behavior: smooth;
+
+      .panel-open & {
+        transform: translateX(calc(-1 * var(--panel-width)));
+      }
+
+      > * + * {
+        display: block;;
+        margin-block-start: 1rem;
+      }
+    }
+
+    figure {
+      margin: 0;
+
+      img {
+        aspect-ratio: 3 / 2;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    a:target {
+      color: red;
+    }
+
+    @media (width > 700px) {
+      body {
+        grid-template-areas: 
+          "header content"
+          "panel content";
+      }
+
+      .panel-toggle {
+        display: none;
+      }
+
+      .overlay {
+        display: none;
+      }
+
+      .panel {
+        position: initial;
+        transition: initial;
+
+        .panel-open & {
+          transform: initial;
+        }
+      }
+    }
+  </style>
+</head>
+<body class="layout">
+  <header>
+    <h1>Panolens v0.0.1</h1>
+    <button class="panel-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <iframe frameborder="0"></iframe>
+
+  <div class="overlay" onclick="toggleMenu()"></div>
+  <div class="panel">
+    <h2>Examples</h2>
+
+    <template id="example-tmpl">
+      <a>
+        <figure>
+          <img />
+          <figcaption></figcaption>
+        </figure>
+      </a>
+    </template>
+  </div>
+
+  <script>
+    const panel = document.querySelector('.panel');
+    const exampleTmpl = document.querySelector('#example-tmpl');
+    const iframe = document.querySelector('iframe');
+
+    const examples = [
+      'examples/custom-element_pano-img.html',
+      'examples/custom-element_pano-video.html',
+    ];
+
+    function toggleMenu() {
+      document.body.classList.toggle('panel-open')
+    }
+
+    function updateIframe() {
+      const source = location.hash.substring(1);
+
+      if (examples.includes(source)) {
+        const source = location.hash.substring(1);
+        iframe.src = source;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      for(const example of examples) {
+        const [dir, filename] = example.split('/');
+        const fragment = exampleTmpl.content.cloneNode(true);
+
+        fragment.querySelector('figcaption').innerHTML = filename
+          .replace('.html', '')
+          .replace('-', ' ')
+          .replace('_', ' / ');
+
+        const anchor = fragment.querySelector('a');
+        anchor.setAttribute('href', `#${example}`);
+        anchor.setAttribute('id', example);
+
+        const img = fragment.querySelector('img');
+        img.src = example.replace('.html', '.jpg');;
+
+        panel.append(fragment);
+      }
+
+      const source = location.hash.substring(1);
+      location.href = examples.includes(source)
+        ? location.href
+        : `#${examples[0]}`;
+
+      updateIframe();
+      window.addEventListener('hashchange', updateIframe);
+    });
+  </script>
+</body>
+</html>

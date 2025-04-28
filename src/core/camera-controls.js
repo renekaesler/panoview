@@ -1,7 +1,7 @@
 import { vec2 } from "gl-matrix";
 
-import { disableGestures, enableGestures } from "#lib/gesture-recognition.js";
-import { clamp, expDecay } from "#lib/math.js";
+import { disableGestures, enableGestures } from "../lib/gesture-recognition.js";
+import { clamp, expDecay } from "../lib/math.js";
 
 const DECAY = 0.003;
 

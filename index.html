@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 
+  <link rel="stylesheet" href="../assets/main.css">
+
   <style>
     :root {
-      --panel-width: 300px;
+      --panel-width: 270px;
     }
 
     * { box-sizing: border-box; }
@@ -22,7 +24,7 @@
       display: grid;
       overflow: hidden;
       grid-template-columns: var(--panel-width) 1fr;
-      grid-template-rows: 64px 1fr;
+      grid-template-rows: auto 1fr;
       grid-template-areas: 
         "header header"
         "content content";
@@ -34,6 +36,13 @@
       grid-area: header;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .version {
+      font-size: smaller;
+      font-weight: normal;
+      color: var(--accent);
     }
 
     iframe {
@@ -60,7 +69,7 @@
 
     .panel {
       position: absolute;
-      right: calc(-1 * var(--panel-width));
+      left: calc(-1 * var(--panel-width));
   
       width: calc(100vw - 20%);
       max-width: var(--panel-width);
@@ -71,11 +80,11 @@
       grid-template-rows: auto minmax(0, 1fr);
 
       transition: .25s transform;
-      background-color: white;
+      background-color: var(--bg);
       scroll-behavior: smooth;
 
       .panel-open & {
-        transform: translateX(calc(-1 * var(--panel-width)));
+        transform: translateX(var(--panel-width));
       }
 
       > * + * {
@@ -85,7 +94,14 @@
     }
 
     figure {
+      display: grid;
       margin: 0;
+      border-radius: 4px;
+      overflow: hidden;
+
+      :where(a:target, a:hover) & {
+        outline: 2px solid currentColor;
+      }
 
       img {
         aspect-ratio: 3 / 2;
@@ -94,11 +110,15 @@
       }
     }
 
-    a:target {
-      color: red;
+    figcaption {
+      padding: .25rem .5rem;
     }
 
     @media (width > 700px) {
+      :root {
+        --panel-width: 300px;
+      }
+
       body {
         grid-template-areas: 
           "header content"
@@ -126,7 +146,7 @@
 </head>
 <body class="layout">
   <header>
-    <h1>Panolens v0.0.1</h1>
+    <h1>Panolens <span class="version">v0.0.1</span></h1>
     <button class="panel-toggle" onclick="toggleMenu()">☰</button>
   </header>
 
